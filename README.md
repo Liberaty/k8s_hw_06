@@ -71,9 +71,49 @@
 Создать DaemonSet приложения, которое может прочитать логи ноды.
 
 1. Создать DaemonSet приложения, состоящего из multitool.
+#
+***Ответ***
+
+Создаём манифест [**daemonset.yaml**](https://github.com/Liberaty/k8s_hw_06/blob/main/daemonset.yaml), запускаем его и проверяем статус
+
+![2.1.png](https://github.com/Liberaty/k8s_hw_06/blob/main/img/2.1.png?raw=true)
+
 2. Обеспечить возможность чтения файла `/var/log/syslog` кластера MicroK8S.
+#
+***Ответ***
+
+Для этого в манифесте были прописаны следующие строки:
+```yaml
+        volumeMounts:
+        - name: logdir
+          mountPath: /nodes-logs/syslog
+          subPath: syslog
+        - name: varlog
+          mountPath: /var/log/syslog
+          readOnly: true
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: logdir
+        hostPath:
+          path: /var/log
+      - name: varlog
+        hostPath:
+          path: /var/log
+```
+
 3. Продемонстрировать возможность чтения файла изнутри пода.
+#
+***Ответ***
+
+Для этого подключаюсь к pod с контейнером multitool и читаю файл по пути ***/nodes-logs/syslog***
+
+![2.3.png](https://github.com/Liberaty/k8s_hw_06/blob/main/img/2.3.png?raw=true)
+
 4. Предоставить манифесты Deployment, а также скриншоты или вывод команды из п. 2.
+#
+***Ответ***
+
+Все команды предоставлены на скриншоте выше.
 
 ------
 
