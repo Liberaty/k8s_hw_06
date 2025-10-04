@@ -29,10 +29,38 @@
 Создать Deployment приложения, состоящего из двух контейнеров и обменивающихся данными.
 
 1. Создать Deployment приложения, состоящего из контейнеров busybox и multitool.
+#
+***Ответ***
+
+Создаём манифест [**deployment.yaml**](https://github.com/Liberaty/k8s_hw_06/blob/main/deployment.yaml) и запускаем его
+
+![1.1.png](https://github.com/Liberaty/k8s_hw_06/blob/main/img/1.1.png?raw=true)
+
 2. Сделать так, чтобы busybox писал каждые пять секунд в некий файл в общей директории.
+#
+***Ответ***
+
+Чтобы контейнер busybox писал дату каждые 5 секунд добавляем в манифест ```command: ["/bin/sh", "-c"]``` и ```args: ["while true; do echo $(date) >> /shared-data/log.txt; sleep 5; done"]```
+
 3. Обеспечить возможность чтения файла контейнером multitool.
+#
+***Ответ***
+
+Для чтения из контейнера multitool добавляем в манифест ```command: ["/bin/sh", "-c"]``` и ```args: ["tail -f /shared-data/log.txt"]```
+
 4. Продемонстрировать, что multitool может читать файл, который периодоически обновляется.
+#
+***Ответ***
+
+Проверяем, что multitool читает файл, который периодически обновляется командой ```kubectl logs -l app=shared-volume -c multitool```
+
+![1.4.png](https://github.com/Liberaty/k8s_hw_06/blob/main/img/1.4.png?raw=true)
+
 5. Предоставить манифесты Deployment в решении, а также скриншоты или вывод команды из п. 4.
+#
+***Ответ***
+
+Все команды предоставлены на скриншоте выше.
 
 ------
 
